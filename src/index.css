@@ -1,0 +1,307 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Casmir Maturi - Data Scientist Portfolio Design System */
+
+@layer base {
+  :root {
+    /* Core Colors - Orange + Deep Navy Blue Palette */
+    --background: 0 0% 100%;
+    --foreground: 213 100% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 213 100% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 213 100% 12%;
+
+    /* Deep Navy Blue - Primary Brand Color (reduced orange) */
+    --primary: 213 85% 25%;
+    --primary-foreground: 0 0% 98%;
+
+    /* Subtle Orange Accent - Secondary Color */
+    --secondary: 28 80% 55%;
+    --secondary-foreground: 0 0% 100%;
+
+    /* Light Background Tones */
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 213 25% 46.9%;
+
+    /* Warm Orange Accent (toned down) */
+    --accent: 32 85% 65%;
+    --accent-foreground: 213 100% 12%;
+
+    /* Portfolio Specific Colors (navy-focused) */
+    --hero-gradient-from: 213 85% 25%;
+    --hero-gradient-to: 28 70% 50%;
+    --particle-color: 32 75% 65%;
+    --skill-card-bg: 0 0% 99%;
+    --project-card-bg: 0 0% 100%;
+    --project-card-hover: 213 20% 97%;
+    --orange-glow: 32 85% 60%;
+    --navy-deep: 213 100% 15%;
+    --glass-bg: 0 0% 100% / 0.1;
+    --glass-border: 0 0% 100% / 0.2;
+
+    /* Additional System Variables */
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Dark Mode - Orange + Deep Navy Theme */
+    --background: 213 100% 8%;
+    --foreground: 0 0% 98%;
+
+    --card: 213 100% 12%;
+    --card-foreground: 0 0% 98%;
+
+    --popover: 213 100% 12%;
+    --popover-foreground: 0 0% 98%;
+
+    --primary: 24 100% 65%;
+    --primary-foreground: 213 100% 8%;
+
+    --secondary: 213 100% 25%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 213 50% 15%;
+    --muted-foreground: 210 15% 65%;
+
+    --accent: 30 100% 70%;
+    --accent-foreground: 213 100% 8%;
+
+    /* Dark Mode Portfolio Colors */
+    --hero-gradient-from: 24 100% 65%;
+    --hero-gradient-to: 213 100% 25%;
+    --particle-color: 24 100% 70%;
+    --skill-card-bg: 213 50% 18%;
+    --project-card-bg: 213 50% 15%;
+    --project-card-hover: 213 50% 22%;
+    --orange-glow: 24 100% 65%;
+    --navy-deep: 213 100% 12%;
+    --glass-bg: 213 100% 8% / 0.1;
+    --glass-border: 0 0% 100% / 0.1;
+
+    --destructive: 0 84% 65%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 215 28% 25%;
+    --input: 215 28% 25%;
+    --ring: 217 91% 60%;
+  }
+}
+
+/* Portfolio Animations & Effects */
+@layer components {
+  .hero-gradient {
+    background: linear-gradient(135deg, hsl(var(--hero-gradient-from)) 0%, hsl(var(--hero-gradient-to)) 100%);
+  }
+  
+  .particle {
+    background: hsl(var(--particle-color));
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  
+  /* Glassmorphism Navbar */
+  .glass-nav {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
+  
+  .dark .glass-nav {
+    background: rgba(26, 35, 126, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Profile Frame with Orange Glow */
+  .profile-frame {
+    position: relative;
+    background: linear-gradient(135deg, hsl(var(--orange-glow)) 0%, hsl(var(--navy-deep)) 100%);
+    padding: 4px;
+    border-radius: 50%;
+    animation: profile-glow 3s ease-in-out infinite alternate;
+  }
+  
+  .profile-frame::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    background: linear-gradient(135deg, hsl(var(--orange-glow)), transparent, hsl(var(--orange-glow)));
+    border-radius: 50%;
+    z-index: -1;
+    animation: rotate-glow 4s linear infinite;
+  }
+  
+  /* Certification Badge */
+  .cert-badge {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(var(--accent)) 100%);
+    transform: scale(1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .cert-badge:hover {
+    transform: scale(1.05) rotateY(10deg);
+    box-shadow: 0 20px 40px -10px hsl(var(--primary) / 0.3);
+  }
+  
+  /* Interactive Section Divider */
+  .section-divider {
+    background: linear-gradient(90deg, transparent, hsl(var(--primary)), transparent);
+    height: 2px;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .section-divider::after {
+    content: '';
+    position: absolute;
+    width: 100px;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, hsl(var(--accent)), transparent);
+    animation: slide-divider 3s ease-in-out infinite;
+  }
+  
+  .skill-card {
+    background: hsl(var(--skill-card-bg));
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .skill-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px -5px hsl(var(--primary) / 0.2);
+  }
+  
+  .project-card {
+    background: hsl(var(--project-card-bg));
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .project-card:hover {
+    background: hsl(var(--project-card-hover));
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px -10px hsl(var(--primary) / 0.15);
+  }
+  
+  /* Glowing Button */
+  .glow-button {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .glow-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(45deg, transparent, hsl(var(--primary) / 0.3), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.6s;
+  }
+  
+  .glow-button:hover::before {
+    transform: translateX(100%);
+  }
+}
+
+/* Custom Keyframes */
+@layer utilities {
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-10px) rotate(1deg); }
+    66% { transform: translateY(5px) rotate(-1deg); }
+  }
+  
+  @keyframes particle-float {
+    0%, 100% { transform: translateY(0px) translateX(0px); opacity: 0.7; }
+    50% { transform: translateY(-20px) translateX(10px); opacity: 1; }
+  }
+  
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes profile-glow {
+    0%, 100% { filter: drop-shadow(0 0 20px hsl(var(--orange-glow) / 0.3)); }
+    50% { filter: drop-shadow(0 0 40px hsl(var(--orange-glow) / 0.6)); }
+  }
+  
+  @keyframes rotate-glow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  @keyframes slide-divider {
+    0%, 100% { left: -100px; }
+    50% { left: calc(100% + 100px); }
+  }
+  
+  @keyframes scale-in {
+    0% { transform: scale(0.9) opacity(0); }
+    100% { transform: scale(1) opacity(1); }
+  }
+  
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-particle-float {
+    animation: particle-float 8s ease-in-out infinite;
+  }
+  
+  .animate-fade-in-up {
+    animation: fade-in-up 0.8s ease-out forwards;
+  }
+  
+  .animate-scale-in {
+    animation: scale-in 0.6s ease-out forwards;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-['Inter'];
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+}
