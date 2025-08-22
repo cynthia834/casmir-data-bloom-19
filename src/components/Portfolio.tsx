@@ -3,7 +3,7 @@ import { Menu, X, Github, Linkedin, Mail, FileDown, ExternalLink } from 'lucide-
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import heroImage from '@/assets/hero-image.jpg';
-import profilePhoto from '@/assets/profile-photo.jpg';
+// Profile photo will be the uploaded image
 import ParticleBackground from './ParticleBackground';
 
 const Portfolio = () => {
@@ -70,73 +70,89 @@ const Portfolio = () => {
     }
   ];
 
-  const projects = [
-    {
-      title: 'AI-Powered Predictive Analytics',
-      description: 'Built a machine learning system that predicts customer behavior with 94% accuracy using ensemble methods.',
-      tech: ['Python', 'TensorFlow', 'Excel', 'Power BI'],
-      link: '#'
-    },
-    {
-      title: 'Interactive Data Dashboard',
-      description: 'Created real-time analytics dashboard processing 1M+ data points for business intelligence.',
-      tech: ['Power BI', 'Excel', 'Python', 'SQL'],
-      link: '#'
-    },
-    {
-      title: 'Statistical Analysis Platform',
-      description: 'Developed comprehensive statistical analysis platform using SPSS and R for advanced research analytics.',
-      tech: ['SPSS', 'R', 'Excel', 'Python'],
-      link: '#'
-    },
-    {
-      title: 'NLP Sentiment Analysis Tool',
-      description: 'Developed sentiment analysis tool for social media monitoring with advanced NLP techniques.',
-      tech: ['Python', 'NLP', 'Predictive Modeling'],
-      link: '#'
-    }
-  ];
+  const [projects, setProjects] = useState([]);
+
+  // Fetch GitHub projects
+  useEffect(() => {
+    const fetchGitHubProjects = async () => {
+      try {
+        const response = await fetch('https://api.github.com/users/Casmir2001/repos?sort=updated&per_page=6');
+        const repos = await response.json();
+        const formattedProjects = repos
+          .filter(repo => !repo.fork && repo.description) // Only non-fork repos with descriptions
+          .map(repo => ({
+            title: repo.name.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+            description: repo.description || 'No description available',
+            tech: repo.language ? [repo.language] : ['GitHub'],
+            link: repo.html_url,
+            stars: repo.stargazers_count,
+            forks: repo.forks_count
+          }));
+        setProjects(formattedProjects);
+      } catch (error) {
+        console.error('Error fetching GitHub projects:', error);
+        // Fallback projects if GitHub API fails
+        setProjects([
+          {
+            title: 'Data Science Projects',
+            description: 'Collection of data science and machine learning projects',
+            tech: ['Python', 'Machine Learning'],
+            link: 'https://github.com/Casmir2001'
+          }
+        ]);
+      }
+    };
+    
+    fetchGitHubProjects();
+  }, []);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Floating Particles */}
       <ParticleBackground />
 
-      {/* Creative Glassmorphism Navigation */}
-      <nav className="fixed top-4 left-1/2 transform -translate-x-1/2 glass-nav rounded-2xl px-8 py-3 z-50 animate-fade-in-up">
+      {/* Enhanced Creative Navigation */}
+      <nav className="fixed top-4 left-1/2 transform -translate-x-1/2 glass-nav rounded-3xl px-10 py-4 z-50 animate-fade-in-up border-2 border-primary/10 shadow-lg hover:shadow-2xl transition-all duration-300">
         <div className="flex items-center justify-between">
-          <div className="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+          <div className="text-2xl font-bold bg-gradient-to-r from-primary via-accent to-secondary bg-clip-text text-transparent animate-pulse">
             Casmir Maturi
           </div>
           
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-6 ml-12">
-            <a href="#about" className="relative group text-foreground hover:text-primary transition-all duration-300">
+          {/* Enhanced Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-8 ml-16">
+            <a href="#about" className="relative group text-foreground hover:text-primary transition-all duration-300 font-medium">
               About
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+              <span className="absolute -bottom-2 left-0 w-0 h-1 bg-gradient-to-r from-primary to-accent rounded-full transition-all duration-300 group-hover:w-full"></span>
+              <span className="absolute inset-0 rounded-lg bg-primary/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100 -z-10"></span>
             </a>
-            <a href="#skills" className="relative group text-foreground hover:text-primary transition-all duration-300">
+            <a href="#skills" className="relative group text-foreground hover:text-primary transition-all duration-300 font-medium">
               Skills
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+              <span className="absolute -bottom-2 left-0 w-0 h-1 bg-gradient-to-r from-primary to-accent rounded-full transition-all duration-300 group-hover:w-full"></span>
+              <span className="absolute inset-0 rounded-lg bg-primary/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100 -z-10"></span>
             </a>
-            <a href="#journey" className="relative group text-foreground hover:text-primary transition-all duration-300">
+            <a href="#journey" className="relative group text-foreground hover:text-primary transition-all duration-300 font-medium">
               Journey
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+              <span className="absolute -bottom-2 left-0 w-0 h-1 bg-gradient-to-r from-primary to-accent rounded-full transition-all duration-300 group-hover:w-full"></span>
+              <span className="absolute inset-0 rounded-lg bg-primary/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100 -z-10"></span>
             </a>
-            <a href="#portfolio" className="relative group text-foreground hover:text-primary transition-all duration-300">
+            <a href="#portfolio" className="relative group text-foreground hover:text-primary transition-all duration-300 font-medium">
               Portfolio
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+              <span className="absolute -bottom-2 left-0 w-0 h-1 bg-gradient-to-r from-primary to-accent rounded-full transition-all duration-300 group-hover:w-full"></span>
+              <span className="absolute inset-0 rounded-lg bg-primary/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100 -z-10"></span>
             </a>
-            <a href="#contact" className="relative group text-foreground hover:text-primary transition-all duration-300">
+            <a href="#contact" className="relative group text-foreground hover:text-primary transition-all duration-300 font-medium">
               Contact
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full"></span>
+              <span className="absolute -bottom-2 left-0 w-0 h-1 bg-gradient-to-r from-primary to-accent rounded-full transition-all duration-300 group-hover:w-full"></span>
+              <span className="absolute inset-0 rounded-lg bg-primary/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100 -z-10"></span>
             </a>
             
-            {/* View Resume CTA */}
-            <Button size="sm" variant="outline" className="ml-4 border-primary/30 hover:bg-primary hover:text-primary-foreground glow-button">
-              <FileDown className="mr-2 h-3 w-3" />
-              View Resume
-            </Button>
+            {/* Enhanced Resume CTA */}
+            <a href="/Casmir-Maturi-Resume.pdf" target="_blank" rel="noopener noreferrer">
+              <Button size="sm" variant="outline" className="ml-6 border-2 border-primary/40 hover:bg-primary hover:text-primary-foreground glow-button hover:scale-105 transition-all duration-300 shadow-md">
+                <FileDown className="mr-2 h-4 w-4" />
+                Resume
+              </Button>
+            </a>
           </div>
 
           {/* Mobile menu button */}
@@ -157,10 +173,12 @@ const Portfolio = () => {
               <a href="#journey" className="hover:text-primary transition-colors py-2 px-4 rounded-lg hover:bg-primary/5">Journey</a>
               <a href="#portfolio" className="hover:text-primary transition-colors py-2 px-4 rounded-lg hover:bg-primary/5">Portfolio</a>
               <a href="#contact" className="hover:text-primary transition-colors py-2 px-4 rounded-lg hover:bg-primary/5">Contact</a>
-              <Button size="sm" variant="outline" className="mt-2 border-primary/30 hover:bg-primary hover:text-primary-foreground">
-                <FileDown className="mr-2 h-3 w-3" />
-                View Resume
-              </Button>
+              <a href="/Casmir-Maturi-Resume.pdf" target="_blank" rel="noopener noreferrer">
+                <Button size="sm" variant="outline" className="mt-2 border-primary/30 hover:bg-primary hover:text-primary-foreground">
+                  <FileDown className="mr-2 h-3 w-3" />
+                  View Resume
+                </Button>
+              </a>
             </div>
           </div>
         )}
@@ -184,50 +202,43 @@ const Portfolio = () => {
               <div className="relative">
                 <div className="profile-frame w-80 h-80">
                   <img 
-                    src={profilePhoto} 
+                    src="/lovable-uploads/58829bb0-1526-43e1-83d3-ce50116665fa.png" 
                     alt="Casmir Maturi - Data Scientist" 
                     className="w-full h-full object-cover rounded-full"
                   />
                 </div>
-                {/* Enhanced livelier bubble particles around profile */}
-                <div className="absolute -inset-28 pointer-events-none">
-                  {[...Array(16)].map((_, i) => (
-                    <div
-                      key={i}
-                      className="absolute rounded-full animate-particle-float"
-                      style={{
-                        left: `${10 + Math.cos(i * 22.5 * Math.PI / 180) * 80}%`,
-                        top: `${10 + Math.sin(i * 22.5 * Math.PI / 180) * 80}%`,
-                        width: `${Math.random() * 12 + 6}px`,
-                        height: `${Math.random() * 12 + 6}px`,
-                        background: i % 4 === 0 ? 'hsl(var(--primary))' : 
-                                   i % 4 === 1 ? 'hsl(var(--secondary))' : 
-                                   i % 4 === 2 ? 'hsl(var(--accent))' : 
-                                   'hsl(32 75% 70%)',
-                        opacity: Math.random() * 0.4 + 0.3,
-                        animationDelay: `${i * 0.2}s`,
-                        animationDuration: `${Math.random() * 6 + 4}s`,
-                        boxShadow: i % 2 === 0 ? '0 0 20px hsl(var(--primary) / 0.3)' : '0 0 15px hsl(var(--secondary) / 0.2)'
-                      }}
-                    />
-                  ))}
-                  {/* Additional smaller floating particles */}
-                  {[...Array(8)].map((_, i) => (
-                    <div
-                      key={`small-${i}`}
-                      className="absolute rounded-full animate-particle-float"
-                      style={{
-                        left: `${25 + Math.cos((i + 8) * 45 * Math.PI / 180) * 50}%`,
-                        top: `${25 + Math.sin((i + 8) * 45 * Math.PI / 180) * 50}%`,
-                        width: '4px',
-                        height: '4px',
-                        background: 'hsl(var(--accent))',
-                        opacity: 0.7,
-                        animationDelay: `${i * 0.4}s`,
-                        animationDuration: `${Math.random() * 3 + 8}s`
-                      }}
-                    />
-                  ))}
+                {/* Two medium bubbles around profile */}
+                <div className="absolute -inset-20 pointer-events-none">
+                  {/* First medium bubble */}
+                  <div
+                    className="absolute rounded-full animate-particle-float"
+                    style={{
+                      left: '20%',
+                      top: '30%',
+                      width: '24px',
+                      height: '24px',
+                      background: 'hsl(var(--primary))',
+                      opacity: 0.6,
+                      animationDelay: '0s',
+                      animationDuration: '6s',
+                      boxShadow: '0 0 25px hsl(var(--primary) / 0.4)'
+                    }}
+                  />
+                  {/* Second medium bubble */}
+                  <div
+                    className="absolute rounded-full animate-particle-float"
+                    style={{
+                      left: '70%',
+                      top: '60%',
+                      width: '20px',
+                      height: '20px',
+                      background: 'hsl(var(--accent))',
+                      opacity: 0.6,
+                      animationDelay: '2s',
+                      animationDuration: '8s',
+                      boxShadow: '0 0 20px hsl(var(--accent) / 0.4)'
+                    }}
+                  />
                 </div>
               </div>
             </div>
@@ -243,14 +254,18 @@ const Portfolio = () => {
               </h2>
               
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Button size="lg" className="glow-button group relative overflow-hidden">
-                  <ExternalLink className="mr-2 h-4 w-4 group-hover:translate-x-1 transition-transform relative z-10" />
-                  <span className="relative z-10">View My Work</span>
-                </Button>
-                <Button variant="outline" size="lg" className="group border-primary/20 hover:border-primary hover:bg-primary/5">
-                  <FileDown className="mr-2 h-4 w-4 group-hover:translate-y-1 transition-transform" />
-                  View Resume
-                </Button>
+                <a href="#portfolio">
+                  <Button size="lg" className="glow-button group relative overflow-hidden">
+                    <ExternalLink className="mr-2 h-4 w-4 group-hover:translate-x-1 transition-transform relative z-10" />
+                    <span className="relative z-10">View My Work</span>
+                  </Button>
+                </a>
+                <a href="/Casmir-Maturi-Resume.pdf" target="_blank" rel="noopener noreferrer">
+                  <Button variant="outline" size="lg" className="group border-primary/20 hover:border-primary hover:bg-primary/5">
+                    <FileDown className="mr-2 h-4 w-4 group-hover:translate-y-1 transition-transform" />
+                    View Resume
+                  </Button>
+                </a>
               </div>
             </div>
           </div>
@@ -424,10 +439,12 @@ const Portfolio = () => {
                       ))}
                     </div>
                     
-                    <Button variant="outline" className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-all">
-                      <ExternalLink className="mr-2 h-4 w-4" />
-                      View Project
-                    </Button>
+                    <a href={project.link} target="_blank" rel="noopener noreferrer" className="block">
+                      <Button variant="outline" className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-all">
+                        <ExternalLink className="mr-2 h-4 w-4" />
+                        View on GitHub
+                      </Button>
+                    </a>
                   </div>
                 </CardContent>
               </Card>
@@ -465,10 +482,12 @@ const Portfolio = () => {
               </div>
             </div>
             
-            <Button size="lg" className="glow-button group relative overflow-hidden">
-              <FileDown className="mr-2 h-4 w-4 group-hover:translate-y-1 transition-transform relative z-10" />
-              <span className="relative z-10">Download Resume PDF</span>
-            </Button>
+            <a href="/Casmir-Maturi-Resume.pdf" target="_blank" rel="noopener noreferrer">
+              <Button size="lg" className="glow-button group relative overflow-hidden">
+                <FileDown className="mr-2 h-4 w-4 group-hover:translate-y-1 transition-transform relative z-10" />
+                <span className="relative z-10">Download Resume PDF</span>
+              </Button>
+            </a>
           </div>
         </div>
       </section>
@@ -481,19 +500,60 @@ const Portfolio = () => {
             I'm always open to collaborations, consulting, or knowledge-sharing in the world of Data Science and AI.
           </p>
 
+          {/* Contact Information */}
+          <div className="grid md:grid-cols-2 gap-8 mb-8">
+            <div className="bg-card rounded-xl p-6 border border-primary/10">
+              <h3 className="text-lg font-semibold mb-4 text-primary">Contact Information</h3>
+              <div className="space-y-3 text-left">
+                <div className="flex items-center gap-3">
+                  <Mail className="h-5 w-5 text-primary" />
+                  <a href="mailto:casmirorori001@gmail.com" className="text-muted-foreground hover:text-primary transition-colors">
+                    casmirorori001@gmail.com
+                  </a>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="h-5 w-5 text-primary flex items-center justify-center text-sm">📱</span>
+                  <a href="tel:+254768802025" className="text-muted-foreground hover:text-primary transition-colors">
+                    +254 768 802 025
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-card rounded-xl p-6 border border-primary/10">
+              <h3 className="text-lg font-semibold mb-4 text-primary">Social Links</h3>
+              <div className="space-y-3">
+                <a href="https://www.linkedin.com/in/casmir-maturi?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors">
+                  <Linkedin className="h-5 w-5" />
+                  LinkedIn Profile
+                </a>
+                <a href="https://github.com/Casmir2001" target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 text-muted-foreground hover:text-primary transition-colors">
+                  <Github className="h-5 w-5" />
+                  GitHub Portfolio
+                </a>
+              </div>
+            </div>
+          </div>
+
           <div className="flex justify-center gap-6 mb-8">
-            <Button variant="outline" size="lg" className="group">
-              <Mail className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
-              Email Me
-            </Button>
-            <Button variant="outline" size="lg" className="group">
-              <Linkedin className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
-              LinkedIn
-            </Button>
-            <Button variant="outline" size="lg" className="group">
-              <Github className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
-              GitHub
-            </Button>
+            <a href="mailto:casmirorori001@gmail.com">
+              <Button variant="outline" size="lg" className="group">
+                <Mail className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
+                Email Me
+              </Button>
+            </a>
+            <a href="https://www.linkedin.com/in/casmir-maturi?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer">
+              <Button variant="outline" size="lg" className="group">
+                <Linkedin className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
+                LinkedIn
+              </Button>
+            </a>
+            <a href="https://github.com/Casmir2001" target="_blank" rel="noopener noreferrer">
+              <Button variant="outline" size="lg" className="group">
+                <Github className="mr-2 h-5 w-5 group-hover:scale-110 transition-transform" />
+                GitHub
+              </Button>
+            </a>
           </div>
 
           <div className="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-2xl p-8 backdrop-blur-sm">
@@ -502,9 +562,11 @@ const Portfolio = () => {
               Whether you need predictive analytics, machine learning solutions, or data visualization, 
               let's discuss how we can turn your data into your competitive advantage.
             </p>
-            <Button size="lg" className="bg-primary hover:bg-primary/90">
-              Send Me a Message
-            </Button>
+            <a href="mailto:casmirorori001@gmail.com">
+              <Button size="lg" className="bg-primary hover:bg-primary/90">
+                Send Me a Message
+              </Button>
+            </a>
           </div>
         </div>
       </section>
@@ -517,13 +579,13 @@ const Portfolio = () => {
             <p className="text-muted-foreground mb-6">Data Scientist & AI Enthusiast</p>
             
             <div className="flex justify-center gap-6 mb-6">
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="https://www.linkedin.com/in/casmir-maturi?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
                 <Linkedin size={24} />
               </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="https://github.com/Casmir2001" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary transition-colors">
                 <Github size={24} />
               </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
+              <a href="mailto:casmirorori001@gmail.com" className="text-muted-foreground hover:text-primary transition-colors">
                 <Mail size={24} />
               </a>
             </div>
