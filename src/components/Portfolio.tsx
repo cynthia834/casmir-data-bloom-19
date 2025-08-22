@@ -146,6 +146,14 @@ const Portfolio = () => {
               <span className="absolute inset-0 rounded-lg bg-primary/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100 -z-10"></span>
             </a>
             
+            {/* Contact CTA Button */}
+            <a href="#contact">
+              <Button size="sm" variant="outline" className="border-2 border-accent/40 hover:bg-accent hover:text-accent-foreground hover:scale-105 transition-all duration-300 shadow-md">
+                <Mail className="mr-2 h-4 w-4" />
+                Contact
+              </Button>
+            </a>
+            
             {/* Enhanced Resume CTA */}
             <a href="/Casmir-Maturi-Resume.pdf" target="_blank" rel="noopener noreferrer">
               <Button size="sm" variant="outline" className="ml-6 border-2 border-primary/40 hover:bg-primary hover:text-primary-foreground glow-button hover:scale-105 transition-all duration-300 shadow-md">
